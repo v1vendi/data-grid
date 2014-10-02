@@ -1,0 +1,44 @@
+﻿<script src="grid.js"></script>
+<link rel="stylesheet" href="grid.css" />
+
+<style>
+    #myGrid {
+        width: 80%;
+        height: 600px;
+        margin: 0 auto;
+    }
+</style>
+<div id="myGrid"></div>
+
+
+<script>
+    var grid;
+    var data = [];
+    var columns = [
+        { id: "title", name: "Title", field: "title" },
+        { id: "number", name: "Number1", field: "number", width: 250 },
+        { id: "number1", name: "Number2", field: "number1", width: 200 },
+        { id: "number2", name: "Number3", field: "number2", width: 150 },
+        { id: "number3", name: "Number4", field: "number3", width: 100 },
+        { id: "range", name: "Range", formatter: NumericRangeFormatter }
+    ];
+
+    function NumericRangeFormatter(row, cell, value, columnDef, dataContext) {
+        return dataContext.from + " - " + dataContext.to;
+    }
+
+    for (var i = 0; i < 50000; i++) {
+        var d = (data[i] = {});
+
+        d["title"] = "Task " + i;
+        d["from"] = Math.round(Math.random() * 100);
+        d["number"] = Math.round(Math.random() * 1000);
+        d["number1"] = Math.round(Math.random() * 1000);
+        d["number2"] = Math.round(Math.random() * 1000);
+        d["number3"] = Math.round(Math.random() * 1000);
+        d["to"] = d["from"] + Math.round(Math.random() * 100);
+    }
+    var $grid = document.getElementById('myGrid');
+    grid = new Grid($grid, data, columns, {});
+
+</script>
