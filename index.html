@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -9,75 +9,88 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
     <title>Data-grid by v1vendi</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <header>
-      <div class="inner">
-        <h1>Data-grid</h1>
-        <h2>JavaScript data grid supporting millions of rows</h2>
-        <a href="https://github.com/v1vendi/data-grid" class="button"><small>View project on</small> GitHub</a>
-      </div>
+        <div class="inner">
+            <h1>Data-grid</h1>
+            <h2>JavaScript data grid supporting millions of rows</h2>
+            <a href="https://github.com/v1vendi/data-grid" class="button"><small>View project on</small> GitHub</a>
+        </div>
     </header>
 
     <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+        <div class="inner clearfix">
+            <section id="main-content">
+                <h3>
+                    Basic example
+                </h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+                <script src="javascripts/grid.js"></script>
+                <link rel="stylesheet" type="text/css" href="stylesheets/grid.css" media="screen">
+                <style>
+                    #data-grid {
+                        width: 100%;
+                        height: 600px;
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+                        border: 1px solid #333;
+                    }
+                </style>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+                <div id="data-grid"></div>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+                <script>
+                    var grid;
+                    var data = [];
+                    var columns = [
+                        { id: "title", name: "Title", field: "title" },
+                        { id: "number", name: "Number1", field: "number", width: 250 },
+                        { id: "number1", name: "Number2", field: "number1", width: 200 },
+                        { id: "number2", name: "Number3", field: "number2", width: 150 },
+                        { id: "number3", name: "Number4", field: "number3", width: 100 },
+                        { id: "range", name: "Range", formatter: NumericRangeFormatter }
+                    ];
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+                    function NumericRangeFormatter(row, cell, value, columnDef, dataContext) {
+                        return dataContext.from + " - " + dataContext.to;
+                    }
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+                    for (var i = 0; i < 50000; i++) {
+                        var d = (data[i] = {});
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+                        d["title"] = "Task " + i;
+                        d["from"] = Math.round(Math.random() * 100);
+                        d["number"] = Math.round(Math.random() * 1000);
+                        d["number1"] = Math.round(Math.random() * 1000);
+                        d["number2"] = Math.round(Math.random() * 1000);
+                        d["number3"] = Math.round(Math.random() * 1000);
+                        d["to"] = d["from"] + Math.round(Math.random() * 100);
+                    }
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+                    var $grid = document.getElementById('data-grid');
+                    grid = new Grid($grid, data, columns, {});
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+                </script>
+            </section>
+            <aside id="sidebar">
+                <a href="https://github.com/v1vendi/data-grid/zipball/master" class="button">
+                    <small>Download</small>
+                    .zip file
+                </a>
+                <a href="https://github.com/v1vendi/data-grid/tarball/master" class="button">
+                    <small>Download</small>
+                    .tar.gz file
+                </a>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+                <p class="repo-owner"><a href="https://github.com/v1vendi/data-grid"></a> is maintained by <a href="https://github.com/v1vendi">v1vendi</a>.</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        </section>
-
-        <aside id="sidebar">
-          <a href="https://github.com/v1vendi/data-grid/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/v1vendi/data-grid/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/v1vendi/data-grid"></a> is maintained by <a href="https://github.com/v1vendi">v1vendi</a>.</p>
-
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
+                <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+            </aside>
+        </div>
     </div>
 
-  
-  </body>
+
+</body>
 </html>

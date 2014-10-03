@@ -1,0 +1,57 @@
+﻿.grid {
+    overflow: hidden;
+    position: relative;
+}
+
+.grid-header {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.header-columns {
+    position: relative;
+}
+
+.header-column {
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    float: left;
+}
+
+.viewport {
+    width: 100%;
+    overflow: auto;
+    outline: 0;
+    position: relative;
+}
+
+.grid-canvas {
+    position: relative;
+}
+
+.grid-row {
+    position: absolute;
+    border: 0;
+    width: 100%;
+    height: 24px;
+}
+
+.grid-cell {
+    box-sizing: border-box;
+    position: absolute;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    z-index: 1;
+    margin: 0;
+    white-space: nowrap;
+    cursor: default;
+
+}
+
+.grid-header-cell {
+    box-sizing: border-box;
+}
