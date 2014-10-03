@@ -195,14 +195,7 @@ function Grid($container, data, columns, options) {
             $headers.appendChild(header);
         }
 
-        function getHeadersWidth() {
-            var headersWidth = columns.reduce(function (sum, header) {
-                return sum + header.width;
-            }, 0);
-
-            headersWidth += scrollbarDimensions.width;
-            return Math.max(headersWidth, viewportW) + 1000;
-        }
+        
     })();
     
     (function createCssRules() {
@@ -383,6 +376,15 @@ function Grid($container, data, columns, options) {
         render();
     }
     
+    function getHeadersWidth() {
+        var headersWidth = columns.reduce(function (sum, header) {
+            return sum + header.width;
+        }, 0);
+
+        headersWidth += scrollbarDimensions.width;
+        return Math.max(headersWidth, viewportW) + 1000;
+    }
+
     function removeRowFromCache(row, index) {
         var cacheEntry = rowsCache[index];
         if (!cacheEntry) {
@@ -614,40 +616,40 @@ function Grid($container, data, columns, options) {
                     cacheEntry.cellNodesByColumnIdx[columnIdx] = node;
                 }
             }
+        }
+    }
 
-            function cleanUpCells(range, row) {
-                var cacheEntry = rowsCache[row];
-                
-                // Remove cells outside the range.
-                var cellsToRemove = [];
-                
-                cacheEntry.cellNodesByColumnIdx.forEach(function (cellNode, i) {
-                    
-                    var colspan = cacheEntry.cellColSpans[i];
-                    
-                    if (columnPosLeft[i] > range.rightPx ||
-                columnPosRight[Math.min(columns.length - 1, i + colspan - 1)] < range.leftPx) {
-                        
-                        cellsToRemove.push(i);
-                    }
-                });
-                
-                
-                cellsToRemove.forEach(removeCell);
-                cellsToRemove.length = 0;
-                
-                function removeCell(cellToRemove) {
-                    var cellNode = cacheEntry.cellNodesByColumnIdx[cellToRemove];
-                    
-                    cacheEntry.rowNode.removeChild(cellNode);
-                    
-                    delete cacheEntry.cellColSpans[cellToRemove];
-                    delete cacheEntry.cellNodesByColumnIdx[cellToRemove];
-                    
-                    if (postProcessedRows[row]) {
-                        delete postProcessedRows[row][cellToRemove];
-                    }
-                }
+    function cleanUpCells(range, row) {
+        var cacheEntry = rowsCache[row];
+
+        // Remove cells outside the range.
+        var cellsToRemove = [];
+
+        cacheEntry.cellNodesByColumnIdx.forEach(function (cellNode, i) {
+
+            var colspan = cacheEntry.cellColSpans[i];
+
+            if (columnPosLeft[i] > range.rightPx ||
+        columnPosRight[Math.min(columns.length - 1, i + colspan - 1)] < range.leftPx) {
+
+                cellsToRemove.push(i);
+            }
+        });
+
+
+        cellsToRemove.forEach(removeCell);
+        cellsToRemove.length = 0;
+
+        function removeCell(cellToRemove) {
+            var cellNode = cacheEntry.cellNodesByColumnIdx[cellToRemove];
+
+            cacheEntry.rowNode.removeChild(cellNode);
+
+            delete cacheEntry.cellColSpans[cellToRemove];
+            delete cacheEntry.cellNodesByColumnIdx[cellToRemove];
+
+            if (postProcessedRows[row]) {
+                delete postProcessedRows[row][cellToRemove];
             }
         }
     }
